@@ -106,7 +106,7 @@ def getUptime():
 	return {'uptime': uptime, 'load1': load1, 'load5': load5, 'load15': load15}
 def getRAM():
 	rp = os.popen("/usr/bin/free -m")
-	rp.readline()
+	head = rp.readline()
 	line = rp.readline()
 	words1 = line.split(' ')
 	words = []
@@ -115,7 +115,7 @@ def getRAM():
 	total = int(words[1])
 	used = int(words[2])
 	free = int(words[3])
-	bufcac = int(words[5])+int(words[6])
+	bufcac = int(words[5]) if '/' in head else int(words[5])+int(words[6])
 	return {'used': used, 'free': free, 'total': total, 'bufcac': bufcac}
 def getDisk():
 	dics = {'single': [], 'total': {'avail': 0, 'used': 0, 'total': 0}}
